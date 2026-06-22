@@ -80,6 +80,18 @@ services:
     ports:
       - "9092:9092"
 
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: smartfeed-kafka-ui
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_CLUSTERS_0_NAME: smartfeed-local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      DYNAMIC_CONFIG_ENABLED: "true"
+    ports:
+      - "8085:8080"
+
   spark-master:
     build:
       context: ./bigdata/spark
