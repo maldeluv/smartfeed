@@ -1,0 +1,109 @@
+@baseUrl = http://localhost:8000
+
+### Healthcheck
+GET {{baseUrl}}/health
+
+### Login demo user
+# @name demoLogin
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "demo@smartfeed.local",
+  "password": "demo12345"
+}
+
+### Login admin user
+# @name adminLogin
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@smartfeed.local",
+  "password": "admin12345"
+}
+
+### Current user
+GET {{baseUrl}}/api/v1/users/me
+Authorization: Bearer {{demoLogin.response.body.$.access_token}}
+
+### Categories
+GET {{baseUrl}}/api/v1/categories
+
+### Articles
+GET {{baseUrl}}/api/v1/articles?limit=5&offset=0
+
+### Article detail
+GET {{baseUrl}}/api/v1/articles/1
+
+### Subscribe category
+POST {{baseUrl}}/api/v1/categories/1/subscribe
+Authorization: Bearer {{demoLogin.response.body.$.access_token}}
+
+### Like article
+POST {{baseUrl}}/api/v1/articles/1/like
+Authorization: Bearer {{demoLogin.response.body.$.access_token}}
+
+### Save article
+POST {{baseUrl}}/api/v1/articles/1/save
+Authorization: Bearer {{demoLogin.response.body.$.access_token}}
+
+### Saved articles
+GET {{baseUrl}}/api/v1/saved
+Authorization: Bearer {{demoLogin.response.body.$.access_token}}
+
+### Recommendations
+GET {{baseUrl}}/api/v1/recommendations?limit=10&offset=0
+Authorization: Bearer {{demoLogin.response.body.$.access_token}}
+
+### Send event
+POST {{baseUrl}}/api/v1/events
+Authorization: Bearer {{demoLogin.response.body.$.access_token}}
+Content-Type: application/json
+
+{
+  "eventType": "view_article",
+  "articleId": 1,
+  "categoryId": 1,
+  "metadata": {
+    "source": "http_collection"
+  }
+}
+
+### Personal analytics
+GET {{baseUrl}}/api/v1/analytics/me
+Authorization: Bearer {{demoLogin.response.body.$.access_token}}
+
+### Global analytics
+GET {{baseUrl}}/api/v1/analytics/global?limit=10&days=30
+Authorization: Bearer {{adminLogin.response.body.$.access_token}}
+
+### Admin create article
+# @name createArticle
+POST {{baseUrl}}/api/v1/admin/articles
+Authorization: Bearer {{adminLogin.response.body.$.access_token}}
+Content-Type: application/json
+
+{
+  "title": "Admin API Demo Article",
+  "summary": "Demo article created through the SmartFeed admin API.",
+  "content": "This article is created from docs/smartfeed.http to check admin-only create/update/delete endpoints.",
+  "source_url": "https://example.com/smartfeed/admin-api-demo-{{$timestamp}}",
+  "category_id": 1,
+  "author": "SmartFeed Admin",
+  "popularity_score": 1
+}
+
+### Admin update article
+PUT {{baseUrl}}/api/v1/admin/articles/{{createArticle.response.body.$.id}}
+Authorization: Bearer {{adminLogin.response.body.$.access_token}}
+Content-Type: application/json
+
+{
+  "title": "Admin API Demo Article Updated",
+  "popularity_score": 2
+}
+
+### Admin delete article
+DELETE {{baseUrl}}/api/v1/admin/articles/{{createArticle.response.body.$.id}}
+Authorization: Bearer {{adminLogin.response.body.$.access_token}}
