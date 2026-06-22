@@ -16,7 +16,7 @@
         <item name="textAppearanceHeadlineMedium">@style/TextAppearance.SmartFeed.HeadlineMedium</item>
         <item name="textAppearanceHeadlineLarge">@style/TextAppearance.SmartFeed.HeadlineLarge</item>
         <item name="android:colorAccent">@color/smartfeed_secondary</item>
-        <item name="android:statusBarColor">@color/smartfeed_primary_dark</item>
+        <item name="android:statusBarColor">@color/smartfeed_primary</item>
         <item name="android:windowLightStatusBar">false</item>
     </style>
 </resources>
