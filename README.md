@@ -2,7 +2,7 @@
 
 Учебный проект SmartFeed. 
 
-Backend и Big Data стенд готовы для демо. Android-клиент инициализирован как Java/XML; полноценные экраны и авторизация будут добавляться следующими этапами. Публичный Android API сохранен; admin CRUD вынесен в отдельный namespace `/api/v1/admin`.
+Backend и Big Data стенд готовы для демо. Android-клиент инициализирован как Java/XML; Публичный Android API сохранен; admin CRUD вынесен в отдельный namespace `/api/v1/admin`.
 
 ## Состав
 
